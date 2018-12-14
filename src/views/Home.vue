@@ -2,6 +2,7 @@
   <div class="home">
     <main class="container">
       <div class="jumbotron">
+        <h1>Bienvenue !</h1>
         <p class="lead">L'application d'écoute et de gestion de musique gratuite, via le catalogue Deezer !</p>
         <hr class="my-4">
         <p>Ecoutez gratuitement des extraits issus de la base de données de Deezer, et organisez vos favoris sur votre compte personnel !</p>
@@ -16,7 +17,6 @@
 
 <script>
 export default {
-  name: "home",
-  },
+  name: "home"
 };
 </script>
