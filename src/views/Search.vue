@@ -52,12 +52,12 @@
           </p>
         </div>
         <div class="card-footer">
-          <a href="#" class="btn btn-secondary btn-sm">
+          <router-link :to="{ name: 'album', params: { id: track.album.id } }" class="btn btn-secondary btn-sm">
             <i class="fa fa-cc-discover"></i> Album
-          </a>
-          <a href="#" class="btn btn-secondary btn-sm">
+          </router-link>
+          <router-link :to="{ name: 'artist', params: { id: track.artist.id } }" class="btn btn-secondary btn-sm">
             <i class="fa fa-user"></i> Artiste
-          </a>
+          </router-link>
           <a href="#" class="btn btn-outline-danger btn-sm">
             <i class="fa fa-heart-o"></i>
           </a>

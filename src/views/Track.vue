@@ -19,7 +19,7 @@
           <div class="media-body">
             <h3 class="mt-0">{{ track.album.title }}</h3>
             <p>Date de sortie : {{ track.album.release_date }}</p>
-            <a href="#" class="btn btn-primary btn-sm">Consulter l'album</a>
+            <router-link :to="{ name: 'album', params: { id: track.album.id }}" class="btn btn-primary btn-sm">Consulter l'album</router-link>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
           <img class="align-self-start mr-3 img-thumbnail" :src="track.artist.picture" :alt="track.artist.name">
           <div class="media-body">
             <h3 class="mt-0">{{ track.artist.name }}</h3>
-            <a href="#" class="btn btn-primary btn-sm">Voir l'artiste</a>
+            <router-link :to="{ name: 'artist', params: { id: track.artist.id }}" class="btn btn-primary btn-sm">Voir l'artiste</router-link>
           </div>
         </div>
       </div>
