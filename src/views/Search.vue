@@ -71,35 +71,37 @@
 import fetchjsonp from 'fetch-jsonp';
 
 export default {
-  name: "Search",
+  name: 'Search',
 
   data() {
     return {
       tracksList: [],
       searchText: '',
-      searchOrder: ''
-    }
+      searchOrder: '',
+    };
   },
 
   computed: {
     user() {
       return this.$store.state.loggedUser;
-    }
+    },
   },
 
   filters: {
     toMinutes(seconds) {
-      let rest = seconds % 60;
-      return Math.floor(seconds/60) + 'min' + rest;
-    }
+      const rest = seconds % 60;
+      return `${Math.floor(seconds / 60)}min${rest}`;
+    },
   },
 
-  methods : {
+  methods: {
     searchForm() {
-      fetchjsonp('https://api.deezer.com/search?q='+ encodeURIComponent(this.searchText) +'&output=jsonp&order=' + this.searchOrder)
+      fetchjsonp(`https://api.deezer.com/search?q=${encodeURIComponent(this.searchText)}&output=jsonp&order=${this.searchOrder}`)
         .then(res => res.json())
-        .then(({data: tracksList}) => this.tracksList = tracksList);
-    }
-  }
+        .then(({ data: tracksList }) => {
+          this.tracksList = tracksList;
+        });
+    },
+  },
 };
 </script>

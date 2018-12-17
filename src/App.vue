@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import DzNavbar from "@/components/DzNavbar";
+import DzNavbar from '@/components/DzNavbar.vue';
 
 export default {
-  name: "App",
-  components: { DzNavbar }
+  name: 'App',
+  components: { DzNavbar },
 };
 </script>
 
