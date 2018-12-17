@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <h1>Bienvenue <span v-if="user">{{user.firstname}} {{user.lastname}}</span></h1>
+    <h1>Bienvenue <span v-if="loggedUser">{{loggedUser.firstname}} {{loggedUser.lastname}}</span></h1>
     <p>Recherchez un titre sur Deezer en utilisant le formulaire suivant :</p>
     <hr>
     <form @submit.prevent="searchForm">
@@ -34,7 +34,7 @@
 
     <h2>Résultats</h2>
     <div class="card-deck search-results">
-      <div class="card" v-for="track in tracksList" :key="track.id">
+      <div class="card" v-for="track in searchResults" :key="track.id">
         <a href="#">
           <img
             class="card-img-top"
@@ -69,21 +69,25 @@
 
 <script>
 import fetchjsonp from 'fetch-jsonp';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'Search',
 
   data() {
     return {
-      tracksList: [],
-      searchText: '',
-      searchOrder: '',
     };
   },
 
   computed: {
-    user() {
-      return this.$store.state.loggedUser;
+    ...mapState(['loggedUser', 'searchResults']),
+    searchText: {
+      get() { return this.$store.state.searchText; },
+      set(value) { return this.setSearchText(value); },
+    },
+    searchOrder: {
+      get() { return this.$store.state.searchOrder; },
+      set(value) { return this.setSearchOrder(value); },
     },
   },
 
@@ -95,11 +99,12 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['setSearchResult', 'setSearchText', 'setSearchOrder']),
     searchForm() {
       fetchjsonp(`https://api.deezer.com/search?q=${encodeURIComponent(this.searchText)}&output=jsonp&order=${this.searchOrder}`)
         .then(res => res.json())
         .then(({ data: tracksList }) => {
-          this.tracksList = tracksList;
+          this.setSearchResult(tracksList);
         });
     },
   },

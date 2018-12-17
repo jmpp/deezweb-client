@@ -7,6 +7,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     loggedUser: null,
+    searchResults: [],
+    searchText: '',
+    searchOrder: '',
   },
 
   getters: {
@@ -24,6 +27,15 @@ export default new Vuex.Store({
   mutations: {
     changeUser(state, user) {
       state.loggedUser = user;
+    },
+    setSearchResult(state, searchResults) {
+      state.searchResults = searchResults;
+    },
+    setSearchText(state, searchText) {
+      state.searchText = searchText;
+    },
+    setSearchOrder(state, searchOrder) {
+      state.searchOrder = searchOrder;
     },
   },
 });
