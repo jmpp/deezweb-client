@@ -5,6 +5,7 @@ import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import Search from './views/Search.vue';
+import Track from './views/Track.vue';
 
 Vue.use(Router);
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: Search,
+    },
+    {
+      path: '/track/:id',
+      name: 'track',
+      component: Track,
     },
   ],
 });

@@ -19,8 +19,8 @@ export default {
   margin-left: auto;
 }
 
-body > main.container {
-  margin-top: 2rem;
+main.container {
+  padding-top: 2rem;
 }
 
 .search-results {

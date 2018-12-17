@@ -35,16 +35,16 @@
     <h2>Résultats</h2>
     <div class="card-deck search-results">
       <div class="card" v-for="track in searchResults" :key="track.id">
-        <a href="#">
+        <router-link :to="{ name: 'track', params: { id: track.id } }">
           <img
             class="card-img-top"
             :src="track.album.cover_big"
             alt="Card image cap"
           >
-        </a>
+        </router-link>
         <div class="card-body">
           <h5 class="card-title">
-            <a href="#">{{track.title}}</a>
+            <router-link :to="{ name: 'track', params: { id: track.id } }">{{track.title}}</router-link>
           </h5>
           <p class="card-text">{{track.artist.name}} / {{track.album.title}}</p>
           <p class="card-text">
@@ -88,13 +88,6 @@ export default {
     searchOrder: {
       get() { return this.$store.state.searchOrder; },
       set(value) { return this.setSearchOrder(value); },
-    },
-  },
-
-  filters: {
-    toMinutes(seconds) {
-      const rest = seconds % 60;
-      return `${Math.floor(seconds / 60)}min${rest}`;
     },
   },
 
