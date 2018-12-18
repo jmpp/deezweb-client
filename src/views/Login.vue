@@ -1,14 +1,19 @@
 <template>
   <main class="container">
     <h1>Connexion</h1>
-    <form>
+
+    <div class="alert alert-danger" role="alert" v-if="error">
+      {{ error }}
+    </div>
+
+    <form @submit.prevent="logUser">
       <div class="form-group">
         <label for="email">Adresse email</label>
-        <input type="email" class="form-control" id="email" placeholder="john.smith@domain.tld">
+        <input type="email" class="form-control" id="email" v-model="email" placeholder="john.smith@domain.tld">
       </div>
       <div class="form-group">
-        <label for="motdepasse">Mot de passe</label>
-        <input type="password" class="form-control" id="motdepasse" placeholder="************">
+        <label for="password">Mot de passe</label>
+        <input type="password" class="form-control" id="password" v-model="password" placeholder="************">
       </div>
       <button type="submit" class="btn btn-primary">Se connecter</button>
     </form>
@@ -20,7 +25,37 @@
 </template>
 
 <script>
+import authService from '@/authService';
+
 export default {
-  name: "Login"
+  name: 'Login',
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: null,
+    };
+  },
+
+  methods: {
+    logUser() {
+      this.error = null;
+
+      authService.login(this.email, this.password)
+        .then(({ token }) => {
+          // Sauvegarde du token dans le local storage du navigateur
+          localStorage.setItem('deezweb-auth-jwt', token);
+          return token;
+        })
+        .then(token => this.$store.dispatch('logUserWithToken', token))
+        .then(() => {
+          this.$router.push('search');
+        })
+        .catch((error) => {
+          this.error = error.message;
+        });
+    },
+  },
 };
 </script>

@@ -61,10 +61,6 @@ export default {
       return this.$store.state.loggedUser;
     },
   },
-
-  created() {
-    this.$store.dispatch('getUser');
-  },
 };
 </script>
 

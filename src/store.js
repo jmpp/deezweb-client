@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import fakeUser from './fakeUser';
+import jwtDecode from 'jwt-decode';
 
 Vue.use(Vuex);
 
@@ -17,10 +17,9 @@ export default new Vuex.Store({
   },
 
   actions: {
-    getUser(context) {
-      fakeUser.getUser().then((user) => {
-        context.commit('changeUser', user);
-      });
+    logUserWithToken(context, token) {
+      const user = jwtDecode(token);
+      context.commit('changeUser', user);
     },
   },
 

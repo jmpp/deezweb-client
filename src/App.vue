@@ -11,6 +11,12 @@ import DzNavbar from '@/components/DzNavbar.vue';
 export default {
   name: 'App',
   components: { DzNavbar },
+  created() {
+    const token = localStorage.getItem('deezweb-auth-jwt');
+    if (token !== null) {
+      this.$store.dispatch('logUserWithToken', token);
+    }
+  }
 };
 </script>
 
