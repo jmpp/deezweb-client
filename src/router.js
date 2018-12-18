@@ -11,7 +11,7 @@ import Artist from './views/Artist.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -22,31 +22,57 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      meta: { requiresNoAuth: true },
     },
     {
       path: '/register',
       name: 'register',
       component: Register,
+      meta: { requiresNoAuth: true },
     },
     {
       path: '/search',
       name: 'search',
       component: Search,
+      meta: { requiresAuth: true },
     },
     {
       path: '/track/:id',
       name: 'track',
       component: Track,
+      meta: { requiresAuth: true },
     },
     {
       path: '/album/:id',
       name: 'album',
       component: Album,
+      meta: { requiresAuth: true },
     },
     {
       path: '/artist/:id',
       name: 'artist',
       component: Artist,
+      meta: { requiresAuth: true },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  // Vérification si on tente d'accéder à une route nécessitant une authentification
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('deezweb-auth-jwt') === null) {
+      return next({
+        path: '/login',
+      });
+    }
+  } else if (to.matched.some(record => record.meta.requiresNoAuth)) {
+    if (localStorage.getItem('deezweb-auth-jwt') !== null) {
+      return next({
+        path: '/search',
+      });
+    }
+  }
+  return next();
+});
+
+export default router;

@@ -16,7 +16,7 @@ export default {
     if (token !== null) {
       this.$store.dispatch('logUserWithToken', token);
     }
-  }
+  },
 };
 </script>
 
