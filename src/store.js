@@ -21,6 +21,9 @@ export default new Vuex.Store({
       const user = jwtDecode(token);
       context.commit('changeUser', user);
     },
+    logoutUser(context) {
+      context.commit('changeUser', null);
+    },
   },
 
   mutations: {

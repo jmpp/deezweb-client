@@ -44,7 +44,9 @@
           <div class="dropdown-menu" aria-labelledby="userMenu">
             <h6 class="dropdown-header">{{loggedUser.firstname}} {{loggedUser.lastname}}</h6>
             <a class="dropdown-item" href="account.html">Mon compte</a>
-            <a class="dropdown-item" href="#">Déconnexion</a>
+            <router-link to="/logout" class="dropdown-item">
+              Déconnexion
+            </router-link>
           </div>
         </div>
       </div>

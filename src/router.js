@@ -9,6 +9,8 @@ import Track from './views/Track.vue';
 import Album from './views/Album.vue';
 import Artist from './views/Artist.vue';
 
+import store from './store';
+
 Vue.use(Router);
 
 const router = new Router({
@@ -53,6 +55,15 @@ const router = new Router({
       name: 'artist',
       component: Artist,
       meta: { requiresAuth: true },
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      beforeEnter(to, from, next) {
+        localStorage.removeItem('deezweb-auth-jwt');
+        store.dispatch('logoutUser');
+        router.replace({ name: 'home' });
+      },
     },
   ],
 });
