@@ -17,13 +17,6 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav nav-right">
 
-        <router-link to="/search" class="nav-item nav-link active">
-          <i class="fa fa-search"></i> Recherche
-        </router-link>
-        <router-link to="/favorites" class="nav-item nav-link">
-          <i class="fa fa-heart"></i> Mes favoris
-        </router-link>
-
         <template v-if="!loggedUser">
           <router-link to="/login" class="nav-item nav-link">
             <i class="fa fa-sign-in"></i> Connexion
@@ -32,23 +25,31 @@
             <i class="fa fa-user-plus"></i> Inscription
           </router-link>
         </template>
-        <div class="nav-item dropleft" v-else>
-          <a class="nav-link dropdown-toggle" id="userMenu" role="button" data-toggle="dropdown">
-            <img
-              :src="loggedUser.avatar"
-              :alt="loggedUser.firstname"
-              width="28"
-              height="28"
-            >
-          </a>
-          <div class="dropdown-menu" aria-labelledby="userMenu">
-            <h6 class="dropdown-header">{{loggedUser.firstname}} {{loggedUser.lastname}}</h6>
-            <a class="dropdown-item" href="account.html">Mon compte</a>
-            <router-link to="/logout" class="dropdown-item">
-              Déconnexion
-            </router-link>
+        <template v-else>
+          <router-link to="/search" class="nav-item nav-link active">
+            <i class="fa fa-search"></i> Recherche
+          </router-link>
+          <router-link to="/favorites" class="nav-item nav-link">
+            <i class="fa fa-heart"></i> Mes favoris
+          </router-link>
+          <div class="nav-item dropleft">
+            <a class="nav-link dropdown-toggle" id="userMenu" role="button" data-toggle="dropdown">
+              <img
+                :src="loggedUser.avatar"
+                :alt="loggedUser.firstname"
+                width="28"
+                height="28"
+              >
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userMenu">
+              <h6 class="dropdown-header">{{loggedUser.firstname}} {{loggedUser.lastname}}</h6>
+              <a class="dropdown-item" href="account.html">Mon compte</a>
+              <router-link to="/logout" class="dropdown-item">
+                Déconnexion
+              </router-link>
+            </div>
           </div>
-        </div>
+        </template>
       </div>
     </div>
   </nav>

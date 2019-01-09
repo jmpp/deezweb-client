@@ -53,7 +53,7 @@ export default {
           this.$router.push('search');
         })
         .catch((error) => {
-          this.error = error.message;
+          this.error = error;
         });
     },
   },

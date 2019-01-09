@@ -69,15 +69,17 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  const jwtClient = localStorage.getItem('deezweb-auth-jwt');
+
   // Vérification si on tente d'accéder à une route nécessitant une authentification
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (localStorage.getItem('deezweb-auth-jwt') === null) {
+    if (jwtClient === null || jwtClient.trim() === '') {
       return next({
         path: '/login',
       });
     }
   } else if (to.matched.some(record => record.meta.requiresNoAuth)) {
-    if (localStorage.getItem('deezweb-auth-jwt') !== null) {
+    if (jwtClient !== null) {
       return next({
         path: '/search',
       });

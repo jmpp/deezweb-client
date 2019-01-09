@@ -32,7 +32,7 @@
     </form>
     <hr>
 
-    <h2>Résultats</h2>
+    <h2 v-if="searchResults.length > 0">Résultats</h2>
     <div class="card-deck search-results">
       <div class="card" v-for="track in searchResults" :key="track.id">
         <router-link :to="{ name: 'track', params: { id: track.id } }">

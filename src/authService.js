@@ -7,8 +7,13 @@ export default {
     return axios.post(`${AUTH_SERVER_URL}/login`, {
       email,
       password,
-    })
-      .then(response => response.data)
+    }).then(response => response.data)
+      .catch(error => Promise.reject(error.response.data));
+  },
+  authenticate(token) {
+    return axios.get(`${AUTH_SERVER_URL}/auth`, {
+      params: { token },
+    }).then(response => response.data)
       .catch(error => Promise.reject(error.response.data));
   },
 };
