@@ -34,11 +34,22 @@
         </div>
       </div>
     </div>
+
+    <hr>
+    <div class="row mt-5">
+      <button class="btn btn-lg btn-outline-danger" @click="toggleFavorite(track)" v-if="(userFavorites.find(t => t.id === track.id)) === undefined">
+        <i class="fa fa-heart"></i> Ajouter aux favoris
+      </button>
+      <button class="btn btn-lg btn-danger" @click="toggleFavorite(track)" v-else>
+        <i class="fa fa-heart-o"></i> Retirer des favoris
+      </button>
+    </div>
   </main>
 </template>
 
 <script>
 import fetchjsonp from 'fetch-jsonp';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Track',
@@ -46,6 +57,19 @@ export default {
     return {
       track: null,
     };
+  },
+  computed: {
+    ...mapGetters(['userFavorites']),
+  },
+  methods: {
+    toggleFavorite(track) {
+      const fav = this.userFavorites.find(t => t.id === track.id);
+      if (fav) {
+        this.$store.dispatch('removeFavorite', track); // Si ce track se trouvait dans les favoris du store, on l'en supprime
+      } else {
+        this.$store.dispatch('addFavorite', track); // Sinon, on l'y ajoute
+      }
+    },
   },
   created() {
     fetchjsonp(`https://api.deezer.com/track/${this.$route.params.id}?output=jsonp`)

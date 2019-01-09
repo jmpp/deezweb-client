@@ -8,6 +8,7 @@ import Search from './views/Search.vue';
 import Track from './views/Track.vue';
 import Album from './views/Album.vue';
 import Artist from './views/Artist.vue';
+import Favorites from './views/Favorites.vue';
 
 import store from './store';
 
@@ -57,9 +58,15 @@ const router = new Router({
       meta: { requiresAuth: true },
     },
     {
+      path: '/favorites',
+      name: 'favorites',
+      component: Favorites,
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/logout',
       name: 'logout',
-      beforeEnter(to, from, next) {
+      beforeEnter() {
         localStorage.removeItem('deezweb-auth-jwt');
         store.dispatch('logoutUser');
         router.replace({ name: 'home' });

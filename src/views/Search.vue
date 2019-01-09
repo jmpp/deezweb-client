@@ -58,8 +58,14 @@
           <router-link :to="{ name: 'artist', params: { id: track.artist.id } }" class="btn btn-secondary btn-sm">
             <i class="fa fa-user"></i> Artiste
           </router-link>
-          <a href="#" class="btn btn-outline-danger btn-sm">
-            <i class="fa fa-heart-o"></i>
+          <a href="#" class="btn btn-sm" :class="{
+            'btn-outline-danger' : !(userFavorites.find(t => t.id === track.id)),
+            'btn-danger'         : (userFavorites.find(t => t.id === track.id))
+          }" @click.prevent="toggleFavorite(track)">
+            <i class="fa" :class="{
+              'fa-heart-o' : !(userFavorites.find(t => t.id === track.id)),
+              'fa-heart'   : (userFavorites.find(t => t.id === track.id))
+            }"></i>
           </a>
         </div>
       </div>
@@ -69,7 +75,7 @@
 
 <script>
 import fetchjsonp from 'fetch-jsonp';
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations, mapGetters } from 'vuex';
 
 export default {
   name: 'Search',
@@ -81,6 +87,7 @@ export default {
 
   computed: {
     ...mapState(['loggedUser', 'searchResults']),
+    ...mapGetters(['userFavorites']),
     searchText: {
       get() { return this.$store.state.searchText; },
       set(value) { return this.setSearchText(value); },
@@ -99,6 +106,14 @@ export default {
         .then(({ data: tracksList }) => {
           this.setSearchResult(tracksList);
         });
+    },
+    toggleFavorite(track) {
+      const fav = this.userFavorites.find(t => t.id === track.id);
+      if (fav) {
+        this.$store.dispatch('removeFavorite', track); // Si ce track se trouvait dans les favoris du store, on l'en supprime
+      } else {
+        this.$store.dispatch('addFavorite', track); // Sinon, on l'y ajoute
+      }
     },
   },
 };
