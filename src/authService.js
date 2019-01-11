@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const AUTH_SERVER_URL = 'http://localhost:9000';
+const AUTH_SERVER_URL = (process.env.NODE_ENV === 'development')
+  ? 'http://localhost:9000'
+  : 'https://deezweb.herokuapp.com';
 
 export default {
   login(email, password) {
